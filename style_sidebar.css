@@ -1,0 +1,119 @@
+/* DASHBOARD LAYOUT & SIDEBAR */
+.dash-layout {
+    display: flex;
+    min-height: 100vh;
+    padding-top: 90px;
+    position: relative;
+}
+
+.dash-sidebar {
+    position: fixed;
+    top: 90px;
+    left: 0;
+    width: 260px;
+    height: calc(100vh - 90px);
+    background: var(--bg-void);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2rem 1.5rem;
+    overflow-y: auto;
+    z-index: 900;
+    transition: transform 0.3s var(--ease-lux);
+}
+
+.dash-main {
+    flex: 1;
+    margin-left: 260px;
+    padding: 3rem;
+    width: 100%;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sidebar-group {
+    margin-bottom: 2rem;
+}
+
+.sidebar-group-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+    padding-left: 1rem;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    border-left: 2px solid transparent;
+}
+
+.sidebar-link svg {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+}
+
+.sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--gold);
+}
+
+.sidebar-link.active {
+    background: rgba(212, 175, 55, 0.05);
+    color: var(--gold);
+    border-left-color: var(--gold);
+}
+
+.sidebar-link.active svg {
+    opacity: 1;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Light Mode Overrides for Sidebar */
+[data-theme="light"] .dash-sidebar {
+    background: #f4f4f4;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .sidebar-link:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .sidebar-link.active {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive Dashboard */
+@media (max-width: 1024px) {
+    .dash-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .dash-sidebar.active {
+        transform: translateX(0);
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .dash-main {
+        margin-left: 0;
+        padding: 2rem;
+    }
+}

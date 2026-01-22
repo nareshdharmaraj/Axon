@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXON // COMMAND CONTROL</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .t-log {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 40px;
+            font-family: inherit;
+            color: var(--v-accent);
+            font-size: 0.7rem;
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--v-border);
+        }
+
+        .node-box {
+            border: 1px solid var(--v-border);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        /* Essential Dashboard Layout Styles */
+        .t-layout {
+            display: flex;
+            padding-top: 100px;
+            min-height: calc(100vh - 100px);
+        }
+
+        .t-sidebar {
+            width: 300px;
+            padding: 60px 40px;
+            background: var(--v-black);
+            border-right: 1px solid var(--v-border);
+            flex-shrink: 0;
+            position: sticky;
+            top: 100px;
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+
+        main {
+            flex-grow: 1;
+            background: var(--v-black);
+            min-width: 0;
+            border-left: 1px solid var(--v-border);
+        }
+
+        .dash-content {
+            padding: 60px;
+        }
+
+        @media (max-width: 1024px) {
+            .t-sidebar {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                bottom: 0;
+                width: 80%;
+                max-width: 300px;
+                z-index: 1002;
+                transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                background: var(--v-gray);
+                border-right: 1px solid var(--v-accent);
+                box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+                padding: 100px 30px 40px;
+            }
+
+            .t-sidebar.active {
+                left: 0;
+            }
+
+            .t-layout {
+                display: block;
+                padding-top: 100px;
+                width: 100%;
+            }
+
+            main {
+                border-left: none;
+                width: 100%;
+            }
+
+            .dash-mobile-toggle {
+                display: inline-flex !important;
+                position: fixed;
+                top: 110px;
+                left: 20px;
+                z-index: 100;
+                padding: 10px 15px;
+                font-size: 0.6rem;
+                background: var(--v-accent) !important;
+                color: #000 !important;
+                border: none;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                border-radius: 2px;
+            }
+
+            .dash-content {
+                padding: 140px 20px 30px;
+                width: 100%;
+            }
+
+            /* Remove max-width constraints on mobile */
+            div[style*="max-width: 600px"] {
+                max-width: 100% !important;
+            }
+
+            /* Backdrop Overlay */
+            .sidebar-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                backdrop-filter: blur(5px);
+                z-index: 1001;
+                display: none;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="v-container nav-inner">
+            <a href="index.html" class="v-logo">AXON</a>
+            <div class="mobile-toggle">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="nav-links">
+                <div class="dropdown">
+                    <span class="nav-link">Home +</span>
+                    <div class="dropdown-content">
+                        <a href="index.html" class="dropdown-link">Home 1</a>
+                        <a href="index2.html" class="dropdown-link">Home 2</a>
+                    </div>
+                </div>
+                <a href="about.html" class="nav-link">About us</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <div class="dropdown">
+                    <span class="nav-link active">Dashboard +</span>
+                    <div class="dropdown-content">
+                        <a href="dashboard-user.html" class="dropdown-link">User Dashboard</a>
+                        <a href="dashboard-admin.html" class="dropdown-link">Admin Dashboard</a>
+                    </div>
+                </div>
+                <a href="login.html" class="nav-link">Login</a>
+            </div>
+            <div style="display: flex; gap: 20px;">
+                <button onclick="toggleTheme()" class="nav-icon" title="Theme">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z" />
+                    </svg>
+                </button>
+                <button onclick="toggleRTL()" class="nav-icon" title="Direction">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="t-layout">
+        <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+        <aside class="t-sidebar">
+            <!-- Mobile Close Button -->
+            <button class="v-button" onclick="toggleSidebar()"
+                style="position: absolute; top: 20px; right: 20px; padding: 5px 10px; font-size: 0.6rem; display: none;"
+                id="sidebar-close">CLOSE</button>
+            <span class="v-label">ROOT_MODULES</span>
+            <div style="margin-top: 40px;">
+                <a href="#" class="t-link active">SYS_HEALTH</a>
+                <a href="#" class="t-link">NODE_MGMT</a>
+                <a href="#" class="t-link">USER_AUDIT</a>
+                <a href="#" class="t-link">GLOBAL_SYNC</a>
+                <a href="#" class="t-link">ROOT_SETTINGS</a>
+            </div>
+            <div style="margin-top: 60px;">
+                <span class="v-label">QUICK_ACTIONS</span>
+                <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;">
+                    <button
+                        style="border: 1px solid var(--v-border); color: var(--v-white); background: transparent; padding: 10px; font-size: 0.6rem; text-align: left; cursor:pointer;">FLUSH_CACHE</button>
+                    <button
+                        style="border: 1px solid var(--v-border); color: var(--v-white); background: transparent; padding: 10px; font-size: 0.6rem; text-align: left; cursor:pointer;">RESTART_NODE_SEA</button>
+                </div>
+            </div>
+            <div style="margin-top: 60px;">
+                <span class="v-label">ENCRYPTION</span>
+                <p style="font-size: 0.6rem; margin-top: 10px; color: var(--v-accent);">SHA-512 // ACTIVE</p>
+            </div>
+        </aside>
+
+        <main>
+            <div class="dash-content">
+                <!-- HEADER -->
+                <div
+                    style="margin-bottom: 60px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px;">
+                    <div>
+                        <button onclick="toggleSidebar()" class="v-button dash-mobile-toggle"
+                            style="display: none; margin-bottom: 20px; font-size: 0.7rem; padding: 10px 20px;">COMMAND_MENU</button>
+                        <span class="v-label" id="page-label">COMMAND_CONSOLE // SYS_HEALTH</span>
+                        <h1 id="page-title"
+                            style="font-size: clamp(2.5rem, 6vw, 4rem); margin-top: 20px; line-height: 1.1;">SYSTEM
+                            <br>SUPREMACY.
+                        </h1>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="v-label">UPTIME</span>
+                        <p style="font-size: 2.5rem; font-weight: 800; color: var(--v-accent);">99.9999%</p>
+                    </div>
+                </div>
+
+                <!-- SECTION: SYS_HEALTH (Default) -->
+                <div id="section-health" class="dash-section">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+                        <div>
+                            <span class="v-label">THERMAL_ARRAY_V2</span>
+                            <div
+                                style="margin-top: 20px; display: grid; grid-template-columns: repeat(20, 1fr); gap: 2px;">
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.3;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.5;"></div>
+                                <div style="aspect-ratio: 1; background: #FF3D00; opacity: 0.8;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.2;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.4;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.3;"></div>
+                                <div style="aspect-ratio: 1; background: #FF3D00; opacity: 0.6;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.1;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.5;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.3;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.2;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.3;"></div>
+                                <div style="aspect-ratio: 1; background: #FF3D00; opacity: 0.4;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.6;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.2;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.1;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.5;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.3;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.2;"></div>
+                                <div style="aspect-ratio: 1; background: #00FF00; opacity: 0.3;"></div>
+                            </div>
+                            <p style="margin-top: 20px; font-size: 0.7rem; opacity: 0.5;">REAL-TIME CORE RE-DISTRIBUTION
+                                MAP</p>
+                        </div>
+                        <div>
+                            <span class="v-label">LIVE_CONSOLE</span>
+                            <div class="t-log" style="margin-top: 20px; font-size: 0.6rem; line-height: 1.8;">
+                                <div style="color: #00FF00;">[OK] BIOMETRIC_SCAN: ADMIN_01 ACCESS GRANTED</div>
+                                <div>[INFO] LOAD_BALANCER: DIVERTING 20% TRAFFIC TO SYDNEY_HUB</div>
+                                <div style="color: #FFA500;">[WARN] POWER_FLUCTUATION: CELL_BLOCK_4 (9.48v)</div>
+                                <div>[OK] KERNEL_SYNC: GLOBAL_HASH_CHECK SUCCESS</div>
+                                <div style="opacity: 0.4;">[IDLE] WAITING FOR NEXT INSTRUCTION_SET...</div>
+                                <div style="color: #00FF00;">[OK] BACKUP_COMMENCED: VOL_9011_AXON</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        style="margin-top: 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div style="border: 1px solid var(--v-border); padding: 30px;">
+                            <span class="v-label">SYDNEY_UPLINK</span>
+                            <h2 style="font-size: 2rem;">STABLE.</h2>
+                            <div style="width: 40px; height: 2px; background: #00FF00; margin-top: 10px;"></div>
+                        </div>
+                        <div style="border: 1px solid var(--v-border); padding: 30px;">
+                            <span class="v-label">LONDON_BRIDGE</span>
+                            <h2 style="font-size: 2rem; color: #FFA500;">PATCHING.</h2>
+                            <div style="width: 40px; height: 2px; background: #FFA500; margin-top: 10px;"></div>
+                        </div>
+                        <div style="border: 1px solid var(--v-border); padding: 30px;">
+                            <span class="v-label">ARCTIC_VAULT</span>
+                            <h2 style="font-size: 2rem;">ENCRYPTED.</h2>
+                            <div style="width: 40px; height: 2px; background: var(--v-accent); margin-top: 10px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION: NODE_MGMT -->
+                <div id="section-node-mgmt" class="dash-section" style="display: none;">
+                    <span class="v-label">ORBITAL_DEPLOYMENT_PLAN</span>
+                    <div
+                        style="margin-top: 40px; border: 1px solid var(--v-border); padding: 40px; background: rgba(255,255,255,0.02);">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                            <h2 style="font-size: 2rem;">FLEET_STATUS_V4</h2>
+                            <button class="v-button"
+                                style="margin: 0; padding: 10px 20px; font-size: 0.6rem;">ADD_SATELLITE</button>
+                        </div>
+                        <div class="v-grid"
+                            style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+                            <div style="padding: 20px; border: 1px solid var(--v-border);">
+                                <span class="v-label" style="font-size: 0.5rem;">S_01 // LEO</span>
+                                <h3>FUEL: 84%</h3>
+                                <p style="font-size: 0.6rem; opacity: 0.5; margin-top: 10px;">ID: AX-77B-1</p>
+                            </div>
+                            <div style="padding: 20px; border: 1px solid var(--v-border);">
+                                <span class="v-label" style="font-size: 0.5rem;">S_02 // MEO</span>
+                                <h3>FUEL: 12%</h3>
+                                <p style="font-size: 0.6rem; opacity: 0.5; margin-top: 10px; color: #FF3D00;">
+                                    CRITICAL_LEVEL</p>
+                            </div>
+                            <div style="padding: 20px; border: 1px solid var(--v-border);">
+                                <span class="v-label" style="font-size: 0.5rem;">S_03 // GEO</span>
+                                <h3>FUEL: 99%</h3>
+                                <p style="font-size: 0.6rem; opacity: 0.5; margin-top: 10px;">NEW_DEPLOYMENT</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                        <div>
+                            <span class="v-label">AUTO_PROVISIONING</span>
+                            <p style="font-size: 0.8rem; margin-top: 20px; opacity: 0.7; line-height: 1.6;">Automated
+                                node spinning is currently active for NAM regions. Systems will automatically allocate
+                                resources based on neural core predictions.</p>
+                            <div style="margin-top: 20px; display: flex; gap: 10px;">
+                                <div style="width: 20px; height: 10px; background: #00FF00;"></div>
+                                <div style="width: 20px; height: 10px; background: #00FF00;"></div>
+                                <div style="width: 20px; height: 10px; background: #00FF00;"></div>
+                                <div style="width: 20px; height: 10px; background: rgba(255,255,255,0.1);"></div>
+                            </div>
+                        </div>
+                        <div style="border-left: 1px solid var(--v-border); padding-left: 40px;">
+                            <span class="v-label">RECOVERY_CHANNELS</span>
+                            <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 15px;">
+                                <a href="#"
+                                    style="color: inherit; text-decoration: none; font-size: 0.7rem; border-bottom: 1px solid var(--v-border); padding-bottom: 10px;">//
+                                    RECOVER_SEOUL_NODE</a>
+                                <a href="#"
+                                    style="color: inherit; text-decoration: none; font-size: 0.7rem; border-bottom: 1px solid var(--v-border); padding-bottom: 10px;">//
+                                    RECOVER_SAO_PAULO_HUB</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION: USER_AUDIT -->
+                <div id="section-user-audit" class="dash-section" style="display: none;">
+                    <div class="v-grid">
+                        <div style="grid-column: span 8;">
+                            <span class="v-label">ROOT_ACCESS_LOGS</span>
+                            <div style="margin-top: 30px; border: 1px solid var(--v-border); padding: 20px;">
+                                <div
+                                    style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; font-size: 0.7rem; color: var(--v-accent); border-bottom: 1px solid var(--v-border); padding-bottom: 10px;">
+                                    <span>TIMESTAMP</span>
+                                    <span>VECTOR</span>
+                                    <span>STATUS</span>
+                                </div>
+                                <div
+                                    style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; font-size: 0.65rem; padding: 15px 0; border-bottom: 1px dotted var(--v-border); opacity: 0.8;">
+                                    <span>22:04:11</span>
+                                    <span>BIO_METRIC_S2</span>
+                                    <span style="color: #00FF00;">GRANTED</span>
+                                </div>
+                                <div
+                                    style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; font-size: 0.65rem; padding: 15px 0; border-bottom: 1px dotted var(--v-border); opacity: 0.8;">
+                                    <span>21:55:00</span>
+                                    <span>RSA_TOKEN_4</span>
+                                    <span style="color: #FF3D00;">DENIED (403)</span>
+                                </div>
+                                <div
+                                    style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; font-size: 0.65rem; padding: 15px 0; border-bottom: 1px dotted var(--v-border); opacity: 0.8;">
+                                    <span>21:42:22</span>
+                                    <span>ROOT_SECRET</span>
+                                    <span style="color: #00FF00;">GRANTED</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="grid-column: span 4;">
+                            <span class="v-label">CREDENTIAL_VAULT</span>
+                            <div
+                                style="margin-top: 30px; background: var(--v-gray); padding: 30px; border: 1px solid var(--v-border);">
+                                <h4 style="font-size: 0.8rem;">TOTAL_KEYS: 12,442</h4>
+                                <div
+                                    style="margin-top: 20px; height: 100px; border-left: 1px solid var(--v-accent); padding-left: 20px;">
+                                    <p style="font-size: 0.7rem; opacity: 0.5;">LATEST_KEY_ROTATION: 14 MIN AGO</p>
+                                    <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 5px;">SECURITY_COMPLIANCE:
+                                        100%</p>
+                                </div>
+                                <button class="v-button"
+                                    style="width: 100%; font-size: 0.6rem;"><span>ROTATE_MASTER_KEY</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION: GLOBAL_SYNC -->
+                <div id="section-sync" class="dash-section" style="display: none;">
+                    <div class="v-grid">
+                        <div style="grid-column: span 6;">
+                            <span class="v-label">QUANTUM_LATTICE_INTEGRITY</span>
+                            <div
+                                style="margin-top: 40px; position: relative; width: 300px; height: 300px; border: 1px solid var(--v-border); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <div
+                                    style="width: 80%; height: 80%; border: 1px dashed var(--v-accent); border-radius: 50%; animation: v-rotate 20s linear infinite;">
+                                </div>
+                                <div style="position: absolute; text-align: center;">
+                                    <h2 style="font-size: 4rem;">99%</h2>
+                                    <span class="v-label"
+                                        style="font-size: 0.5rem; margin-top: -10px;">LATTICE_SYNC</span>
+                                </div>
+                            </div>
+                            <style>
+                                @keyframes v-rotate {
+                                    from {
+                                        transform: rotate(0deg);
+                                    }
+
+                                    to {
+                                        transform: rotate(360deg);
+                                    }
+                                }
+                            </style>
+                        </div>
+                        <div style="grid-column: span 6;">
+                            <span class="v-label">ACTIVE_LINK_STREAMS</span>
+                            <div style="margin-top: 40px; display: flex; flex-direction: column; gap: 20px;">
+                                <div
+                                    style="padding: 20px; border: 1px solid var(--v-border); display: flex; justify-content: space-between;">
+                                    <span>UPLINK_SYDNEY</span>
+                                    <span style="color: #00FF00;">1.2 GB/S</span>
+                                </div>
+                                <div
+                                    style="padding: 20px; border: 1px solid var(--v-border); display: flex; justify-content: space-between;">
+                                    <span>DOWNLINK_LONDON</span>
+                                    <span style="color: #00FF00;">4.8 GB/S</span>
+                                </div>
+                                <div
+                                    style="padding: 20px; border: 1px solid var(--v-border); display: flex; justify-content: space-between; border-color: #FF3D00;">
+                                    <span>ORBIT_04_PULSE</span>
+                                    <span style="color: #FF3D00;">PACKET_LOSS (12%)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION: ROOT_SETTINGS -->
+                <div id="section-settings" class="dash-section" style="display: none;">
+                    <span class="v-label">KERNEL_CONFIG</span>
+                    <div style="margin-top: 30px; max-width: 600px;">
+                        <div
+                            style="padding: 20px; border: 1px solid #FF3D00; background: rgba(255,61,0,0.05); margin-bottom: 30px;">
+                            <h4 style="color: #FF3D00; margin-bottom: 10px;">DANGER_ZONE</h4>
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <span style="font-size: 0.8rem;">MAINTENANCE_MODE</span>
+                                <button
+                                    style="background: #FF3D00; color: #fff; border: none; padding: 5px 15px; font-size: 0.7rem; cursor: pointer;">ENABLE</button>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 0.8rem;">FORCE_SYSTEM_RESET</span>
+                                <button
+                                    style="background: transparent; border: 1px solid #FF3D00; color: #FF3D00; padding: 5px 15px; font-size: 0.7rem; cursor: pointer;">EXECUTE</button>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 15px;">API_KEYS</h4>
+                            <div
+                                style="background: var(--v-gray); padding: 10px; border: 1px solid var(--v-border); font-family: monospace; font-size: 0.8rem; display: flex; justify-content: space-between;">
+                                <span>sk_live_9942_ax...</span>
+                                <span style="color: var(--v-accent); cursor: pointer;">COPY</span>
+                            </div>
+                            <button class="v-button"
+                                style="margin-top: 20px; width: 100%;"><span>GENERATE_NEW_KEY</span></button>
+                            <div style="margin-top: 30px; border-top: 1px solid var(--v-border); padding-top: 30px;">
+                                <h4 style="margin-bottom: 20px;">PROTOCOL_OVERRIDES</h4>
+                                <div
+                                    style="margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                                    <div>
+                                        <div
+                                            style="padding: 20px; border: 1px solid #FF3D00; background: rgba(255,61,0,0.05); margin-bottom: 30px;">
+                                            <h4 style="color: #FF3D00; margin-bottom: 10px;">DANGER_ZONE</h4>
+                                            <div
+                                                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                                <span style="font-size: 0.8rem;">MAINTENANCE_MODE</span>
+                                                <button
+                                                    style="background: #FF3D00; color: #fff; border: none; padding: 5px 15px; font-size: 0.7rem; cursor: pointer;">ENABLE</button>
+                                            </div>
+                                            <div
+                                                style="display: flex; justify-content: space-between; align-items: center;">
+                                                <span style="font-size: 0.8rem;">FORCE_SYSTEM_RESET</span>
+                                                <button
+                                                    style="background: transparent; border: 1px solid #FF3D00; color: #FF3D00; padding: 5px 15px; font-size: 0.7rem; cursor: pointer;">EXECUTE</button>
+                                            </div>
+                                        </div>
+                                        <h4 style="margin-bottom: 15px;">API_KEYS</h4>
+                                        <div
+                                            style="background: var(--v-gray); padding: 10px; border: 1px solid var(--v-border); font-family: monospace; font-size: 0.8rem; display: flex; justify-content: space-between;">
+                                            <span>sk_live_9942_ax...</span>
+                                            <span style="color: var(--v-accent); cursor: pointer;">COPY</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="v-label">SYSTEM_ENTROPY</span>
+                                        <div
+                                            style="margin-top: 20px; border: 1px solid var(--v-border); padding: 30px; text-align: center;">
+                                            <h2 style="font-size: 3rem; color: #00FF00;">0.002%</h2>
+                                            <p style="font-size: 0.7rem; opacity: 0.5;">VARIANCE_STABLE</p>
+                                            <div
+                                                style="margin-top: 20px; height: 4px; background: rgba(255,255,255,0.1);">
+                                                <div style="width: 2%; height: 100%; background: #00FF00;"></div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 30px;">
+                                            <span class="v-label">MASTER_LOCKDOWN</span>
+                                            <p style="font-size: 0.7rem; opacity: 0.6; margin-top: 10px;">Immediately
+                                                severs all
+                                                external orbital and terrestrial links. Use only in event of a Level 5
+                                                Neural
+                                                Breach.</p>
+                                            <button class="v-button"
+                                                style="width: 100%; background: #FF3D00; color: #fff;"><span>ACTIVATE_PROTOCOL_AX</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </main>
+    </div>
+
+    <footer class="dash-footer"
+        style="width: 100%; border-top: 1px solid var(--v-border); background: var(--v-black); position: relative; z-index: 10;">
+        <div class="v-grid" style="row-gap: 50px; padding: 60px;">
+            <!-- Brand -->
+            <div style="grid-column: span 3;">
+                <a href="index.html" class="v-logo">AXON</a>
+                <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.7; line-height: 1.6;">
+                    Forging the future of industrial autonomy. Next-gen robotics and orbital architecture.
+                </p>
+                <div style="margin-top: 30px; display: flex; gap: 20px;">
+                    <a href="#" style="opacity: 0.5; font-size: 0.7rem; color: inherit;">LINKEDIN</a>
+                    <a href="#" style="opacity: 0.5; font-size: 0.7rem; color: inherit;">TWITTER</a>
+                </div>
+            </div>
+
+            <!-- Sitemap -->
+            <div style="grid-column: span 2; grid-column-start: 5;">
+                <span class="v-label">SITEMAP</span>
+                <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+                    <a href="index.html"
+                        style="opacity: 0.6; text-decoration: none; font-size: 0.8rem; color: inherit;">Home</a>
+                    <a href="about.html"
+                        style="opacity: 0.6; text-decoration: none; font-size: 0.8rem; color: inherit;">About</a>
+                    <a href="services.html"
+                        style="opacity: 0.6; text-decoration: none; font-size: 0.8rem; color: inherit;">Services</a>
+                    <a href="contact.html"
+                        style="opacity: 0.6; text-decoration: none; font-size: 0.8rem; color: inherit;">Contact</a>
+                </div>
+            </div>
+
+            <!-- Legal/Nodes -->
+            <div style="grid-column: span 3;">
+                <span class="v-label">COMPLIANCE</span>
+                <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+                    <span style="opacity: 0.6; font-size: 0.8rem;">ISO 9001:2015 CERTIFIED</span>
+                    <span style="opacity: 0.6; font-size: 0.8rem;">AS9100D AEROSPACE</span>
+                    <a href="#"
+                        style="opacity: 0.6; text-decoration: none; font-size: 0.8rem; color: inherit; margin-top: 10px;">Privacy
+                        Protocol</a>
+                    <a href="#" style="opacity: 0.6; text-decoration: none; font-size: 0.8rem; color: inherit;">Terms of
+                        Engagement</a>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div style="grid-column: span 3;">
+                <span class="v-label">INTEL_FEED</span>
+                <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.6; margin-bottom: 20px;">Receive classified
+                    updates on new vectors.</p>
+                <form action="#" style="display: flex;">
+                    <input type="email" placeholder="EMAIL_ID"
+                        style="background: transparent; border: 1px solid var(--v-border); padding: 10px; color: inherit; font-family: inherit; width: 100%; font-size: 0.7rem;">
+                    <button type="submit"
+                        style="background: var(--v-accent); border: none; padding: 0 20px; font-weight: bold; cursor: pointer;">></button>
+                </form>
+            </div>
+
+            <!-- Bottom Row -->
+            <div
+                style="grid-column: span 12; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--v-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                <p style="font-size: 0.7rem; opacity: 0.4;">© 2026 // VANGUARD INDUSTRIAL OS // ALL RIGHTS FORGED</p>
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="width: 10px; height: 10px; background: #00FF00; border-radius: 50%;"></span>
+                        <span style="font-size: 0.7rem; letter-spacing: 1px;">SYSTEM ONLINE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        // Global Toggle Function
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.t-sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // Show close button on mobile
+        if (window.innerWidth <= 1024) {
+            document.getElementById('sidebar-close').style.display = 'block';
+        }
+
+        // Tab Switching Logic for Admin Dashboard
+        const links = document.querySelectorAll('.t-link');
+        const sections = document.querySelectorAll('.dash-section');
+        const pageLabel = document.getElementById('page-label');
+        const pageTitle = document.getElementById('page-title');
+
+        // Map link text to section IDs and titles
+        const sectionMap = {
+            'SYS_HEALTH': { id: 'section-health', title: 'SYSTEM <br>SUPREMACY.' },
+            'NODE_MGMT': { id: 'section-node-mgmt', title: 'NODE <br>CONTROL.' },
+            'USER_AUDIT': { id: 'section-user-audit', title: 'ACCESS <br>LOGS.' },
+            'GLOBAL_SYNC': { id: 'section-sync', title: 'GLOBAL <br>NETWORK.' },
+            'ROOT_SETTINGS': { id: 'section-settings', title: 'KERNEL <br>CONFIG.' }
+        };
+
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const key = link.innerText.trim();
+                const data = sectionMap[key];
+
+                if (data) {
+                    // Update Active Link
+                    links.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+
+                    // Update Content
+                    sections.forEach(s => s.style.display = 'none');
+                    document.getElementById(data.id).style.display = 'block';
+
+                    // Update Header
+                    pageLabel.innerText = `COMMAND_CONSOLE // ${key}`;
+                    pageTitle.innerHTML = data.title;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

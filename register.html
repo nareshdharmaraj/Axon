@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXON // REGISTRATION</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>
+        <div class="v-container nav-inner">
+            <a href="index.html" class="v-logo">AXON</a>
+            <div class="mobile-toggle">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="nav-links">
+                <div class="dropdown">
+                    <span class="nav-link">Home +</span>
+                    <div class="dropdown-content">
+                        <a href="index.html" class="dropdown-link">Home 1</a>
+                        <a href="index2.html" class="dropdown-link">Home 2</a>
+                    </div>
+                </div>
+                <a href="about.html" class="nav-link">About us</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <div class="dropdown">
+                    <span class="nav-link">Dashboard +</span>
+                    <div class="dropdown-content">
+                        <a href="dashboard-user.html" class="dropdown-link">User Dashboard</a>
+                        <a href="dashboard-admin.html" class="dropdown-link">Admin Dashboard</a>
+                    </div>
+                </div>
+                <a href="login.html" class="nav-link">Login</a>
+            </div>
+            <div style="display: flex; gap: 20px;">
+                <button onclick="toggleTheme()" class="nav-icon" title="Theme">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z" />
+                    </svg>
+                </button>
+                <button onclick="toggleRTL()" class="nav-icon" title="Direction">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="auth-wrap">
+        <!-- Reusing auth-circle for consistent branding -->
+        <div class="auth-circle"></div>
+
+        <div class="auth-panel v-reveal">
+            <span class="v-label">SYSTEM_REGISTRATION // NEW_OPERATOR</span>
+            <h2 style="margin: 20px 0 50px; font-size: 2.5rem;">INITIALIZE.</h2>
+
+            <form action="dashboard-user.html">
+                <input type="text" placeholder="OPERATOR_NAME" class="auth-input" required>
+                <input type="email" placeholder="COMMS_ID" class="auth-input" required>
+                <input type="password" placeholder="SECURE_KEY" class="auth-input" required>
+                <button type="submit" class="v-button" style="width: 100%; margin-top: 20px;"><span>GENERATE
+                        ID</span></button>
+            </form>
+
+            <div style="margin-top: 40px; display: flex; flex-direction: column; gap: 10px;">
+                <p style="font-size: 0.6rem; opacity: 0.5; margin-bottom: 20px;">
+                    [ NOTICE: AUTHORIZED REFERRAL REQUIRED FOR ACCESS ]
+                </p>
+                <a href="login.html" class="nav-link" style="font-size: 0.6rem;">[ ALREADY_CLEARED // LOGIN ]</a>
+            </div>
+        </div>
+    </div>
+
+    <footer style="padding: 100px 12vw; border-top: 1px solid var(--v-border);">
+        <div class="v-grid" style="row-gap: 50px;">
+            <!-- Brand -->
+            <div style="grid-column: span 3;">
+                <a href="index.html" class="v-logo">AXON</a>
+                <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.7; line-height: 1.6;">
+                    Forging the future of industrial autonomy. Next-gen robotics and orbital architecture.
+                </p>
+                <div style="margin-top: 30px; display: flex; gap: 20px;">
+                    <a href="#" style="color: var(--v-white); opacity: 0.5; font-size: 0.7rem;">LINKEDIN</a>
+                    <a href="#" style="color: var(--v-white); opacity: 0.5; font-size: 0.7rem;">TWITTER</a>
+                </div>
+            </div>
+
+            <!-- Sitemap -->
+            <div style="grid-column: span 2; grid-column-start: 5;">
+                <span class="v-label">SITEMAP</span>
+                <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+                    <a href="index.html"
+                        style="color: var(--v-white); opacity: 0.6; text-decoration: none; font-size: 0.8rem;">Home</a>
+                    <a href="about.html"
+                        style="color: var(--v-white); opacity: 0.6; text-decoration: none; font-size: 0.8rem;">About</a>
+                    <a href="services.html"
+                        style="color: var(--v-white); opacity: 0.6; text-decoration: none; font-size: 0.8rem;">Services</a>
+                    <a href="contact.html"
+                        style="color: var(--v-white); opacity: 0.6; text-decoration: none; font-size: 0.8rem;">Contact</a>
+                </div>
+            </div>
+
+            <!-- Legal/Nodes -->
+            <div style="grid-column: span 3;">
+                <span class="v-label">COMPLIANCE</span>
+                <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+                    <span style="color: var(--v-white); opacity: 0.6; font-size: 0.8rem;">ISO 9001:2015 CERTIFIED</span>
+                    <span style="color: var(--v-white); opacity: 0.6; font-size: 0.8rem;">AS9100D AEROSPACE</span>
+                    <a href="#"
+                        style="color: var(--v-white); opacity: 0.6; text-decoration: none; font-size: 0.8rem; margin-top: 10px;">Privacy
+                        Protocol</a>
+                    <a href="#"
+                        style="color: var(--v-white); opacity: 0.6; text-decoration: none; font-size: 0.8rem;">Terms of
+                        Engagement</a>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div style="grid-column: span 3;">
+                <span class="v-label">INTEL_FEED</span>
+                <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.6; margin-bottom: 20px;">Receive classified
+                    updates on new vectors.</p>
+                <form action="#" style="display: flex;">
+                    <input type="email" placeholder="EMAIL_ID"
+                        style="background: transparent; border: 1px solid var(--v-border); padding: 10px; color: var(--v-white); font-family: inherit; width: 100%; font-size: 0.7rem;">
+                    <button type="submit"
+                        style="background: var(--v-accent); border: none; padding: 0 20px; font-weight: bold; cursor: pointer;">></button>
+                </form>
+            </div>
+
+            <!-- Bottom Row -->
+            <div
+                style="grid-column: span 12; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--v-border); display: flex; justify-content: space-between; align-items: center;">
+                <p style="font-size: 0.7rem; opacity: 0.4;">© 2026 // VANGUARD INDUSTRIAL OS // ALL RIGHTS FORGED</p>
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <span style="width: 10px; height: 10px; background: #00FF00; border-radius: 50%;"></span>
+                    <span style="font-size: 0.7rem; letter-spacing: 1px;">SYSTEM ONLINE</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

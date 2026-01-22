@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXON // VANGUARD INDUSTRIAL</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>
+        <div class="v-container nav-inner">
+            <a href="index.html" class="v-logo">AXON</a>
+            <div class="mobile-toggle">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="nav-links">
+                <div class="dropdown">
+                    <span class="nav-link active">Home +</span>
+                    <div class="dropdown-content">
+                        <a href="index.html" class="dropdown-link">Home 1</a>
+                        <a href="index2.html" class="dropdown-link">Home 2</a>
+                    </div>
+                </div>
+                <a href="about.html" class="nav-link">About us</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <div class="dropdown">
+                    <span class="nav-link">Dashboard +</span>
+                    <div class="dropdown-content">
+                        <a href="dashboard-user.html" class="dropdown-link">User Dashboard</a>
+                        <a href="dashboard-admin.html" class="dropdown-link">Admin Dashboard</a>
+                    </div>
+                </div>
+                <a href="login.html" class="nav-link">Login</a>
+            </div>
+            <div style="display: flex; gap: 20px;">
+                <button onclick="toggleTheme()" class="nav-icon" title="Theme">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z" />
+                    </svg>
+                </button>
+                <button onclick="toggleRTL()" class="nav-icon" title="Direction">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero v-container">
+        <span class="v-label">AXON_SYSTEMS // OPERATING_LEVEL_MAX</span>
+        <h1>FOR <br>THE<br>ODD</h1>
+        <div class="hero-sub">
+            EST. 1985 / GLOBAL INDUSTRIAL SUPREMACY.
+            WE DON'T COMPROMISE. WE DON'T FAIL.
+            PRECISION IS OUR RELIGION.
+        </div>
+        <div class="hero-visual">
+            <img src="Assets/hero.png" alt="Industrial Forge">
+        </div>
+
+    </header>
+
+    <div class="v-marquee">
+        <div class="marquee-content">
+            PRECISION • SCALE • LEGACY • AUTOMATION • TITANIUM • CARBON • PRECISION • SCALE • LEGACY •
+        </div>
+    </div>
+
+    <!-- NEW CONTENT: LIVE METRICS STRIP -->
+    <div style="border-bottom: 1px solid var(--v-border); padding: 20px 0; background: var(--v-black);">
+        <div class="v-container" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+            <div>
+                <span class="v-label" style="font-size: 0.5rem;">GLOBAL_OUTPUT</span>
+                <div style="font-family: 'Syne'; font-size: 1.5rem; color: var(--v-accent);">98.4%</div>
+            </div>
+            <div>
+                <span class="v-label" style="font-size: 0.5rem;">ACTIVE_NODES</span>
+                <div style="font-family: 'Syne'; font-size: 1.5rem;">142</div>
+            </div>
+            <div>
+                <span class="v-label" style="font-size: 0.5rem;">SAFETY_RATING</span>
+                <div style="font-family: 'Syne'; font-size: 1.5rem;">AAA+</div>
+            </div>
+            <div>
+                <span class="v-label" style="font-size: 0.5rem;">CARBON_OFFSET</span>
+                <div style="font-family: 'Syne'; font-size: 1.5rem;">-40%</div>
+            </div>
+        </div>
+    </div>
+
+    <section class="v-container">
+        <div class="section-num">01</div>
+        <div class="v-grid">
+            <div class="v-card v-reveal">
+                <div
+                    style="width: 100%; height: 200px; background: var(--v-black); margin-bottom: 30px; overflow: hidden;">
+                    <img src="Assets/vector1.png"
+                        style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(1);">
+                </div>
+                <span class="v-label">VECTOR_01</span>
+                <h3>ATOMIC <br>MACHINING</h3>
+                <p style="margin-top: 20px; opacity: 0.6;">Micron-level accuracy for the aerospace elite. We forge what
+                    others deem impossible.</p>
+            </div>
+            <div class="v-card v-reveal" style="grid-column: span 4; margin-top: 80px;">
+                <div
+                    style="width: 100%; height: 200px; background: var(--v-black); margin-bottom: 30px; overflow: hidden;">
+                    <img src="Assets/vector2.png"
+                        style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(1);">
+                </div>
+                <span class="v-label">VECTOR_02</span>
+                <h3>NEURAL <br>FORGING</h3>
+                <p style="margin-top: 20px; opacity: 0.6;">AI-integrated manufacturing pipelines. 100% autonomous. 100%
+                    lethal efficiency.</p>
+            </div>
+            <div class="v-card v-reveal" style="grid-column: span 4; margin-top: 160px;">
+                <div
+                    style="width: 100%; height: 200px; background: var(--v-black); margin-bottom: 30px; overflow: hidden;">
+                    <img src="Assets/vector3.png"
+                        style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(1);">
+                </div>
+                <span class="v-label">VECTOR_03</span>
+                <h3>KINETIC <br>LOGISTICS</h3>
+                <p style="margin-top: 20px; opacity: 0.6;">Global supply nodes synchronized via orbital telemetry.
+                    Next-hour readiness.</p>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--v-white); color: var(--v-black);">
+        <div class="v-container v-grid">
+            <div style="grid-column: span 6;">
+                <h2 style="font-size: 5rem;">ENGINE <br>TO THE <br>BONE.</h2>
+                <p style="margin-top: 40px; max-width: 400px; font-weight: 500;">Our legacy is written in titanium. 40
+                    years of zero-failure missions. We are the backbone of modern industry.</p>
+
+                <div style="margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                    <div>
+                        <h4 style="font-size: 2rem; font-family: 'Syne';">2.4M</h4>
+                        <span class="v-label" style="color: var(--v-black); opacity: 0.5;">UNITS_SHIPPED</span>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 2rem; font-family: 'Syne';">40</h4>
+                        <span class="v-label" style="color: var(--v-black); opacity: 0.5;">YEARS_ACTIVE</span>
+                    </div>
+                </div>
+
+            </div>
+            <div style="grid-column: span 6; display: flex; align-items: center; justify-content: center;">
+                <div
+                    style="width: 100%; height: 500px; background: var(--v-gray-light); border: 20px solid var(--v-black);">
+                    <img src="Assets/engineer.png"
+                        style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(1);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW CONTENT: CLIENT DECRYPTION (TESTIMONIALS) -->
+    <section class="v-container" style="background: var(--v-gray);">
+        <div class="section-head reveal" style="margin-bottom: 80px;">
+            <span class="v-label">CLIENT_LOGS // DECRYPTED</span>
+            <h2 style="font-size: 3rem;">FIELD REPORTS.</h2>
+        </div>
+        <div class="v-grid">
+            <div class="v-card v-reveal">
+                <p style="font-size: 1.1rem; line-height: 1.6; font-style: italic;">"AXON delivered the thrust vectoring
+                    components 3 weeks ahead of schedule. The tolerance levels were beyond what our own labs could
+                    verify. Absolute mastery."</p>
+                <div style="margin-top: 40px; display: flex; align-items: center; gap: 20px;">
+                    <div style="width: 50px; height: 50px; background: #fff; border-radius: 50%; overflow: hidden;">
+                        <img src="Assets/hero.png"
+                            style="width:100%; height:100%; object-fit:cover; filter:grayscale(1);">
+                    </div>
+                    <div>
+                        <h5 style="text-transform: uppercase;">Cmdr. J. Sheppard</h5>
+                        <span class="v-label" style="font-size: 0.5rem;">ORBITAL_DEFENSE_CORP</span>
+                    </div>
+                </div>
+            </div>
+            <div class="v-card v-reveal">
+                <p style="font-size: 1.1rem; line-height: 1.6; font-style: italic;">"We required a complete factory
+                    retrofit in 48 hours. AXON's automation teams arrived and deployed neural controllers that saved us
+                    millions."</p>
+                <div style="margin-top: 40px; display: flex; align-items: center; gap: 20px;">
+                    <div style="width: 50px; height: 50px; background: #fff; border-radius: 50%; overflow: hidden;">
+                        <img src="Assets/vector1.png"
+                            style="width:100%; height:100%; object-fit:cover; filter:grayscale(1);">
+                    </div>
+                    <div>
+                        <h5 style="text-transform: uppercase;">Dr. Elena Vostok</h5>
+                        <span class="v-label" style="font-size: 0.5rem;">QUANTUM_DYNAMICS</span>
+                    </div>
+                </div>
+            </div>
+            <div class="v-card v-reveal">
+                <p style="font-size: 1.1rem; line-height: 1.6; font-style: italic;">"Reliability is the only metric that
+                    matters in deep-sea mining. AXON's titanium housings have never failed us at 5000 fathoms."</p>
+                <div style="margin-top: 40px; display: flex; align-items: center; gap: 20px;">
+                    <div style="width: 50px; height: 50px; background: #fff; border-radius: 50%; overflow: hidden;">
+                        <img src="Assets/vector2.png"
+                            style="width:100%; height:100%; object-fit:cover; filter:grayscale(1);">
+                    </div>
+                    <div>
+                        <h5 style="text-transform: uppercase;">Dir. K. Tanaka</h5>
+                        <span class="v-label" style="font-size: 0.5rem;">PACIFIC_RESOURCE_GRP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="v-container">
+        <div class="section-num">02</div>
+        <div style="text-align: center; margin-bottom: 80px;">
+            <span class="v-label">TRUSTED_BY // THE_ELITE</span>
+            <h2 style="font-size: 4rem; margin-top: 20px;">STRATEGIC<br>ALLIANCE</h2>
+        </div>
+        <div class="v-grid" style="text-align: center;">
+            <div style="grid-column: span 3; opacity: 0.5; border: 1px solid var(--v-border); padding: 20px;">[
+                AEROSPACE_PRIME ]</div>
+            <div style="grid-column: span 3; opacity: 0.5; border: 1px solid var(--v-border); padding: 20px;">[
+                ORBITAL_DEFENSE ]</div>
+            <div style="grid-column: span 3; opacity: 0.5; border: 1px solid var(--v-border); padding: 20px;">[
+                QUANTUM_LABS ]</div>
+            <div style="grid-column: span 3; opacity: 0.5; border: 1px solid var(--v-border); padding: 20px;">[
+                DEEP_CORE_MINING ]</div>
+        </div>
+    </section>
+
+    <!-- NEW CONTENT: PROTOCOL FAQ -->
+    <section class="v-container" style="background: var(--v-black);">
+        <div class="v-grid">
+            <div style="grid-column: span 4;">
+                <span class="v-label">OPERATING_PROTOCOLS</span>
+                <h2 style="font-size: 3rem; margin-top: 20px;">FAQ</h2>
+            </div>
+            <div style="grid-column: span 8;">
+                <details style="margin-bottom: 20px; border-bottom: 1px solid var(--v-border); padding-bottom: 20px;">
+                    <summary style="font-family: 'Syne'; font-size: 1.5rem; cursor: pointer; color: var(--v-accent);">
+                        WHAT IS YOUR TOLERANCE STANDARD?</summary>
+                    <p style="margin-top: 15px; opacity: 0.7;">We strictly adhere to a +/- 0.0001mm tolerance for all
+                        aerospace and medical components. Optical verification is standard.</p>
+                </details>
+                <details style="margin-bottom: 20px; border-bottom: 1px solid var(--v-border); padding-bottom: 20px;">
+                    <summary style="font-family: 'Syne'; font-size: 1.5rem; cursor: pointer; color: var(--v-accent);">DO
+                        YOU HANDLE CLASSIFIED DATA?</summary>
+                    <p style="margin-top: 15px; opacity: 0.7;">Yes. Our facilities are ITAR compliant and we utilize
+                        quantum-safe encryption for all IP exchanges.</p>
+                </details>
+                <details style="margin-bottom: 20px; border-bottom: 1px solid var(--v-border); padding-bottom: 20px;">
+                    <summary style="font-family: 'Syne'; font-size: 1.5rem; cursor: pointer; color: var(--v-accent);">
+                        WHAT ARE LEAD TIMES?</summary>
+                    <p style="margin-top: 15px; opacity: 0.7;">Standard lead time is 4 weeks. Rapid Prototyping (Vector
+                        05) can deliver assets in under 72 hours.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <section class="v-container" style="background: var(--v-gray-light);">
+        <div class="v-grid">
+            <div style="grid-column: span 4;">
+                <span class="v-label">TRANSMISSION_LOG</span>
+                <h3 style="margin-top: 20px;">SYSTEM UPDATE 4.0</h3>
+                <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.7;">We have successfully achieved 99.9999%
+                    uptime across all Seattle manufacturing nodes. Efficiency is now absolute.</p>
+                <a href="#" class="v-button" style="margin-top: 30px; font-size: 0.6rem;"><span>Read Log</span></a>
+            </div>
+            <div style="grid-column: span 4; border-left: 1px solid var(--v-border); padding-left: 40px;">
+                <span class="v-label">TRANSMISSION_LOG</span>
+                <h3 style="margin-top: 20px;">NEW VECTOR: TOKYO</h3>
+                <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.7;">Expansion into the Asian sector is
+                    complete. The Tokyo Hub is now online and accepting secure contracts.</p>
+                <a href="#" class="v-button" style="margin-top: 30px; font-size: 0.6rem;"><span>Read Log</span></a>
+            </div>
+            <div style="grid-column: span 4; border-left: 1px solid var(--v-border); padding-left: 40px;">
+                <span class="v-label">TRANSMISSION_LOG</span>
+                <h3 style="margin-top: 20px;">SUSTAINABILITY 2030</h3>
+                <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.7;">AXON pledges full carbon neutrality by
+                    2030 through advanced nuclear micro-reactor integration.</p>
+                <a href="#" class="v-button" style="margin-top: 30px; font-size: 0.6rem;"><span>Read Log</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW CONTENT: STRATEGIC EXPANSION MAP VISUALIZATION -->
+    <section class="v-container" style="padding-bottom: 0;">
+        <div class="v-grid" style="align-items: center;">
+            <div style="grid-column: span 5;">
+                <span class="v-label">GLOBAL_DOMINANCE_MAP</span>
+                <h2 style="font-size: 3rem; margin-top: 20px;">NETWORK <br>DENSITY.</h2>
+                <p style="margin-top: 30px; opacity: 0.7;">Visualizing the interconnected mesh of AXON's supply chain.
+                    From raw mineral extraction in the asteroid belt (simulated) to final assembly in our terrestrial
+                    foundries.</p>
+                <div style="margin-top: 40px; border-top: 1px solid var(--v-border); padding-top: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>NORTH_AMERICA</span>
+                        <span style="color: var(--v-accent);">98% COVERAGE</span>
+                    </div>
+                    <div style="height: 4px; background: var(--v-gray-light); width: 100%;">
+                        <div style="height: 100%; background: var(--v-accent); width: 98%;"></div>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; padding-top: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>EUROPE_MIDDLE_EAST</span>
+                        <span style="color: var(--v-accent);">85% COVERAGE</span>
+                    </div>
+                    <div style="height: 4px; background: var(--v-gray-light); width: 100%;">
+                        <div style="height: 100%; background: var(--v-accent); width: 85%;"></div>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; padding-top: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>ASIA_PACIFIC</span>
+                        <span style="color: var(--v-accent);">92% COVERAGE</span>
+                    </div>
+                    <div style="height: 4px; background: var(--v-gray-light); width: 100%;">
+                        <div style="height: 100%; background: var(--v-accent); width: 92%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div style="grid-column: span 7;">
+                <div
+                    style="width: 100%; height: 500px; background: var(--v-black); position: relative; overflow: hidden; border: 1px solid var(--v-border);">
+                    <img src="Assets/vector3.png"
+                        style="width: 100%; height: 100%; object-fit: cover; opacity: 0.6; filter: hue-rotate(180deg) contrast(1.2);">
+                    <div
+                        style="position: absolute; top: 30%; left: 20%; width: 10px; height: 10px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px #fff;">
+                    </div>
+                    <div
+                        style="position: absolute; top: 35%; left: 70%; width: 10px; height: 10px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px #fff;">
+                    </div>
+                    <div
+                        style="position: absolute; top: 60%; left: 80%; width: 10px; height: 10px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px #fff;">
+                    </div>
+                    <div
+                        style="position: absolute; top: 40%; left: 50%; width: 10px; height: 10px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px #fff;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW CONTENT: QUANTUM INFRASTRUCTURE -->
+    <section class="v-container" style="background: var(--v-black); border-top: 1px solid var(--v-border);">
+        <div class="v-grid">
+            <div style="grid-column: span 6; display: flex; flex-direction: column; justify-content: center;">
+                <span class="v-label">COMPUTATIONAL_BACKBONE</span>
+                <h2 style="font-size: 3rem; margin-top: 20px;">QUANTUM <br>SUPREMACY.</h2>
+                <p style="margin-top: 30px; opacity: 0.7;">We don't just manufacture matter; we compute reality. Our
+                    proprietary Q-Core processors simulate molecular interactions before a single atom is forged,
+                    ensuring 100% structural integrity from the start.</p>
+                <div style="margin-top: 40px; display: flex; gap: 40px;">
+                    <div>
+                        <h4 style="font-family: 'Syne'; font-size: 2rem; color: var(--v-accent);">512</h4>
+                        <span class="v-label" style="font-size: 0.6rem;">QUBITS</span>
+                    </div>
+                    <div>
+                        <h4 style="font-family: 'Syne'; font-size: 2rem; color: var(--v-accent);">0.00s</h4>
+                        <span class="v-label" style="font-size: 0.6rem;">LATENCY</span>
+                    </div>
+                    <div>
+                        <h4 style="font-family: 'Syne'; font-size: 2rem; color: var(--v-accent);">∞</h4>
+                        <span class="v-label" style="font-size: 0.6rem;">SCALABILITY</span>
+                    </div>
+                </div>
+            </div>
+            <div style="grid-column: span 6;">
+                <div
+                    style="width: 100%; height: 400px; background: var(--v-gray); border: 1px solid var(--v-border); position: relative; overflow: hidden;">
+                    <img src="Assets/engineer.png"
+                        style="width: 100%; height: 100%; object-fit: cover; opacity: 0.6; filter: grayscale(1);">
+                    <div
+                        style="position: absolute; bottom: 20px; left: 20px; border: 1px solid var(--v-accent); padding: 5px 10px; color: var(--v-accent); font-size: 0.6rem;">
+                        CORE_TEMP: -273.15°C
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="dash-footer" style="border-top: 1px solid var(--v-border); margin-top: 0; padding-top: 80px;">
+        <div class="v-grid" style="row-gap: 50px;">
+            <!-- Brand -->
+            <div style="grid-column: span 3;">
+                <a href="index.html" class="v-logo">AXON</a>
+                <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.7; line-height: 1.6;">
+                    Forging the future of industrial autonomy. Next-gen robotics and orbital architecture.
+                </p>
+                <div style="margin-top: 30px; display: flex; gap: 20px;">
+                    <a href="#" style="opacity: 0.5; font-size: 0.7rem; color: inherit;">LINKEDIN</a>
+                    <a href="#" style="opacity: 0.5; font-size: 0.7rem; color: inherit;">TWITTER</a>
+                </div>
+            </div>
+
+            <!-- Sitemap -->
+            <div style="grid-column: span 2; grid-column-start: 5;">
+                <span class="v-label">SITEMAP</span>
+                <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+                    <a href="index.html"
+                        style="opacity: 0.6; text-decoration: none; font-size: 0.8rem; color: inherit;">Home</a>
+                    <a href="about.html"
+                        style="opacity: 0.6; text-decoration: none; font-size: 0.8rem; color: inherit;">About</a>
+                    <a href="services.html"
+                        style="opacity: 0.6; text-decoration: none; font-size: 0.8rem; color: inherit;">Services</a>
+                    <a href="contact.html"
+                        style="opacity: 0.6; text-decoration: none; font-size: 0.8rem; color: inherit;">Contact</a>
+                </div>
+            </div>
+
+            <!-- Legal/Nodes -->
+            <div style="grid-column: span 3;">
+                <span class="v-label">COMPLIANCE</span>
+                <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+                    <span style="opacity: 0.6; font-size: 0.8rem;">ISO 9001:2015 CERTIFIED</span>
+                    <span style="opacity: 0.6; font-size: 0.8rem;">AS9100D AEROSPACE</span>
+                    <a href="#"
+                        style="opacity: 0.6; text-decoration: none; font-size: 0.8rem; color: inherit; margin-top: 10px;">Privacy
+                        Protocol</a>
+                    <a href="#" style="opacity: 0.6; text-decoration: none; font-size: 0.8rem; color: inherit;">Terms of
+                        Engagement</a>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div style="grid-column: span 3;">
+                <span class="v-label">INTEL_FEED</span>
+                <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.6; margin-bottom: 20px;">Receive classified
+                    updates on new vectors.</p>
+                <form action="#" style="display: flex;">
+                    <input type="email" placeholder="EMAIL_ID"
+                        style="background: transparent; border: 1px solid var(--v-border); padding: 10px; color: inherit; font-family: inherit; width: 100%; font-size: 0.7rem;">
+                    <button type="submit"
+                        style="background: var(--v-accent); border: none; padding: 0 20px; font-weight: bold; cursor: pointer;">></button>
+                </form>
+            </div>
+
+            <!-- Bottom Row -->
+            <div
+                style="grid-column: span 12; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--v-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                <p style="font-size: 0.7rem; opacity: 0.4;">© 2026 // VANGUARD INDUSTRIAL OS // ALL RIGHTS FORGED</p>
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="width: 10px; height: 10px; background: #00FF00; border-radius: 50%;"></span>
+                        <span style="font-size: 0.7rem; letter-spacing: 1px;">SYSTEM ONLINE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

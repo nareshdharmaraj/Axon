@@ -81,8 +81,59 @@
 
     <header class="v-container"
         style="padding-top: 250px; padding-bottom: 100px; border-bottom: 1px solid var(--v-border);">
-        <span class="v-label">SECURE_CHANNEL // ENCRYPTED_UPLINK</span>
-        <h1 style="font-size: clamp(3rem, 10vw, 8rem); line-height: 0.9;">INITIATE <br>CALL</h1>
+        <div class="v-grid" style="align-items: flex-end;">
+            <div style="grid-column: span 7;">
+                <span class="v-label">SECURE_CHANNEL // ENCRYPTED_UPLINK</span>
+                <h1 style="font-size: clamp(3rem, 10vw, 8rem); line-height: 0.9;">INITIATE <br>CALL</h1>
+            </div>
+            <div style="grid-column: span 5; display: flex; flex-direction: column; align-items: flex-end;">
+                <div
+                    style="width: 100%; max-width: 300px; border: 1px solid var(--v-border); padding: 20px; background: rgba(0,240,255,0.02); position: relative; overflow: hidden;">
+                    <span class="v-label" style="font-size: 0.5rem; margin-bottom: 15px;">NEURAL_LINK_FREQ</span>
+
+                    <!-- Animated Waveform -->
+                    <div style="height: 60px; display: flex; align-items: center; gap: 3px; margin-top: 10px;">
+                        <div class="v-bar" style="height: 20%; animation-delay: 0.1s;"></div>
+                        <div class="v-bar" style="height: 50%; animation-delay: 0.2s;"></div>
+                        <div class="v-bar" style="height: 80%; animation-delay: 0.3s;"></div>
+                        <div class="v-bar" style="height: 40%; animation-delay: 0.4s;"></div>
+                        <div class="v-bar" style="height: 90%; animation-delay: 0.5s;"></div>
+                        <div class="v-bar" style="height: 30%; animation-delay: 0.6s;"></div>
+                        <div class="v-bar" style="height: 70%; animation-delay: 0.7s;"></div>
+                        <div class="v-bar" style="height: 100%; animation-delay: 0.8s;"></div>
+                        <div class="v-bar" style="height: 40%; animation-delay: 0.9s;"></div>
+                        <div class="v-bar" style="height: 60%; animation-delay: 1.0s;"></div>
+                    </div>
+
+                    <div
+                        style="margin-top: 20px; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; opacity: 0.5;">
+                        <span>SCANNING...</span>
+                        <span style="color: var(--v-accent);">LOCK_ON_SUCCESS</span>
+                    </div>
+
+                    <style>
+                        .v-bar {
+                            flex: 1;
+                            background: var(--v-accent);
+                            opacity: 0.6;
+                            animation: bar-dance 1.5s ease-in-out infinite alternate;
+                        }
+
+                        @keyframes bar-dance {
+                            0% {
+                                transform: scaleY(0.3);
+                                opacity: 0.2;
+                            }
+
+                            100% {
+                                transform: scaleY(1);
+                                opacity: 0.8;
+                            }
+                        }
+                    </style>
+                </div>
+            </div>
+        </div>
     </header>
 
     <section class="v-container">
@@ -170,7 +221,7 @@
     </section>
 
     <!-- NEW CONTENT: DIRECT DEPARTMENT LINKS -->
-    <section class="v-container" style="padding: 100px 0;">
+    <section class="v-container" style="padding-top: 100px; padding-bottom: 100px;">
         <div class="v-grid">
             <div style="grid-column: span 12;">
                 <span class="v-label">DIRECT_LINKS</span>
@@ -209,7 +260,7 @@
     </section>
 
     <!-- NEW CONTENT: SECURE VAULT TRANSMISSION -->
-    <section class="v-container" style="padding: 100px 0;">
+    <section class="v-container" style="padding-top: 100px; padding-bottom: 100px;">
         <div class="v-grid" style="align-items: center;">
             <div style="grid-column: span 5;">
                 <span class="v-label">ENCRYPTED_DROPBOX</span>
@@ -259,53 +310,118 @@
         </div>
     </section>
 
-    <!-- NEW CONTENT: IDENTITY VERIFICATION -->
-    <section class="v-container" style="background: var(--v-gray); padding: 80px 0;">
+    <!-- NEW SECTION: KNOWLEDGE_CORE -->
+    <section class="v-container" style="background: var(--v-black); border-top: 1px solid var(--v-border);">
         <div class="v-grid" style="align-items: center;">
             <div style="grid-column: span 6;">
-                <span class="v-label">ANTI_PHISHING_PROTOCOL</span>
-                <h2 style="font-size: 2.5rem; margin-top: 20px;">VERIFY <br>AGENT.</h2>
-                <p style="margin-top: 30px; opacity: 0.7;">Received a communication from someone claiming to be AXON
-                    personnel? Input their unique Agent ID below to verify their credentials and security clearance
-                    status.</p>
+                <span class="v-label">SELF_TERMINATED_HELP</span>
+                <h2 style="font-size: 3rem; margin-top: 20px;">POWER<br>CORE.</h2>
+                <p style="margin-top: 30px; opacity: 0.7;">Access our extensive database of technical manuals, security
+                    protocols, and integration guides. Most queries can be resolved by consulting the primary Q-Core
+                    archive.</p>
+                <div style="margin-top: 40px;">
+                    <a href="#"
+                        style="display: block; padding: 20px; border: 1px solid var(--v-border); text-decoration: none; color: inherit; margin-bottom: 10px;">
+                        <span style="color: var(--v-accent);">DOC_01</span> // INTEGRATION_MANUAL_v4
+                    </a>
+                    <a href="#"
+                        style="display: block; padding: 20px; border: 1px solid var(--v-border); text-decoration: none; color: inherit; margin-bottom: 10px;">
+                        <span style="color: var(--v-accent);">DOC_02</span> // SECURITY_CLEARANCE_PATH
+                    </a>
+                    <a href="#"
+                        style="display: block; padding: 20px; border: 1px solid var(--v-border); text-decoration: none; color: inherit;">
+                        <span style="color: var(--v-accent);">DOC_03</span> // MATERIAL_SPECS_DATABASE
+                    </a>
+                </div>
             </div>
             <div style="grid-column: span 6;">
-                <form onsubmit="event.preventDefault();" style="display: flex; gap: 10px;">
-                    <input type="text" placeholder="ENTER_AGENT_ID (e.g. AX-9920)"
-                        style="flex: 1; padding: 20px; background: #000; border: 1px solid var(--v-border); color: var(--v-white); outline: none;"
-                        required>
-                    <button class="v-button" style="padding: 0 40px;"><span>VERIFY</span></button>
-                </form>
-                <div style="margin-top: 20px; font-size: 0.7rem; opacity: 0.5;">
-                    <p>LAST_VERIFICATION_LOG: 2 SECONDS AGO [IP: 192.168.0.4]</p>
+                <div
+                    style="width: 100%; height: 400px; background: var(--v-gray); border: 1px solid var(--v-border); display: flex; align-items: center; justify-content: center; position: relative;">
+                    <div
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 48%, var(--v-border) 49%, var(--v-border) 51%, transparent 52%); opacity: 0.1;">
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 4rem; font-family: 'Syne'; color: var(--v-accent);">8.4 PB</div>
+                        <span class="v-label">ARCHIVED_DATA</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- NEW SECTION: VISITOR PROTOCOLS -->
-    <section class="v-container" style="border-top: 1px solid var(--v-border); padding: 80px 0;">
+    <!-- NEW SECTION: SYSTEM_DIAGNOSTICS -->
+    <section class="v-container"
+        style="background: var(--v-gray); border-top: 1px solid var(--v-border); padding-top: 100px; padding-bottom: 100px;">
         <div class="v-grid">
-            <div style="grid-column: span 5;">
-                <span class="v-label">ACCESS_CONTROL</span>
-                <h2 style="font-size: 2.5rem; margin-top: 20px;">ON-SITE <br>PROTOCOLS.</h2>
-                <p style="margin-top: 30px; opacity: 0.7;">Physical access to any AXON facility requires Level-3
-                    clearance verification 24 hours prior to arrival. All electronic devices must be surrendered at the
-                    air-gap checkpoint.</p>
+            <div style="grid-column: span 12; margin-bottom: 60px;">
+                <span class="v-label">NETWORK_INTEGRITY</span>
+                <h2 style="font-size: 3rem;">CORE <br>DIAGNOSTICS.</h2>
             </div>
-            <div style="grid-column: span 7;">
-                <div style="display: flex; gap: 40px; margin-bottom: 40px;">
-                    <div style="flex: 1; border: 1px solid var(--v-border); padding: 30px;">
-                        <h4 style="color: var(--v-accent);">01 // BIOMETRICS</h4>
-                        <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.6;">Retinal scan and gait analysis
-                            required for entry.</p>
-                    </div>
-                    <div style="flex: 1; border: 1px solid var(--v-border); padding: 30px;">
-                        <h4 style="color: var(--v-accent);">02 // NDA</h4>
-                        <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.6;">Corporate espionage
-                            countermeasures are active.</p>
-                    </div>
-                </div>
+            <div style="grid-column: span 3; border: 1px solid var(--v-border); padding: 30px;">
+                <span class="v-label" style="font-size: 0.5rem;">APOLLO_NODE</span>
+                <div style="font-size: 1.5rem; margin-top: 10px; color: #00FF00;">99.9%</div>
+                <p style="font-size: 0.6rem; opacity: 0.5; margin-top: 10px;">Operational / LEO</p>
+            </div>
+            <div style="grid-column: span 3; border: 1px solid var(--v-border); padding: 30px;">
+                <span class="v-label" style="font-size: 0.5rem;">TITAN_VAULT</span>
+                <div style="font-size: 1.5rem; margin-top: 10px; color: #00FF00;">STABLE</div>
+                <p style="font-size: 0.6rem; opacity: 0.5; margin-top: 10px;">Secure / Terrestrial</p>
+            </div>
+            <div
+                style="grid-column: span 3; border: 1px solid var(--v-border); padding: 30px; background: rgba(255, 61, 0, 0.05); border-color: #FF3D00;">
+                <span class="v-label" style="font-size: 0.5rem; color: #FF3D00;">VOID_STATION</span>
+                <div style="font-size: 1.5rem; margin-top: 10px; color: #FF3D00;">WARNING</div>
+                <p style="font-size: 0.6rem; opacity: 0.5; margin-top: 10px; color: #FF3D00;">Solar Interference / Deep
+                    Space</p>
+            </div>
+            <div style="grid-column: span 3; border: 1px solid var(--v-border); padding: 30px;">
+                <span class="v-label" style="font-size: 0.5rem;">GLOBAL_UPLINK</span>
+                <div style="font-size: 1.5rem; margin-top: 10px; color: var(--v-accent);">SYNCED</div>
+                <p style="font-size: 0.6rem; opacity: 0.5; margin-top: 10px;">Primary Channel / Encryption Active</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: SUPPORT_TIERS -->
+    <section class="v-container" style="padding-top: 150px; padding-bottom: 150px;">
+        <div style="text-align: center; margin-bottom: 100px;">
+            <span class="v-label">ESCALATION_PROTOCOLS</span>
+            <h2 style="font-size: 3rem;">SERVICE <br>LEVELS.</h2>
+        </div>
+        <div class="v-grid">
+            <div style="grid-column: span 4; padding: 40px; border: 1px solid var(--v-border);">
+                <h4 style="font-family: 'Syne'; margin-bottom: 20px;">STANDARD_L1</h4>
+                <ul style="list-style: none; padding: 0; font-size: 0.8rem; opacity: 0.7; line-height: 2;">
+                    <li>// 24H Response Time</li>
+                    <li>// Technical Documentation Access</li>
+                    <li>// Digital Only Comms</li>
+                </ul>
+                <button class="v-button"
+                    style="width: 100%; margin-top: 40px; font-size: 0.6rem;">SELECT_PROTOCOL</button>
+            </div>
+            <div
+                style="grid-column: span 4; padding: 40px; border: 1px solid var(--v-accent); background: rgba(0, 240, 255, 0.02); position: relative;">
+                <div
+                    style="position: absolute; top: -15px; right: 20px; background: var(--v-accent); color: #000; padding: 5px 15px; font-size: 0.5rem; font-weight: 800;">
+                    RECOMENDED</div>
+                <h4 style="font-family: 'Syne'; margin-bottom: 20px;">COMMAND_L2</h4>
+                <ul style="list-style: none; padding: 0; font-size: 0.8rem; opacity: 0.7; line-height: 2;">
+                    <li>// 2H Response Time</li>
+                    <li>// Direct Engineer Dedicated Line</li>
+                    <li>// On-site Support Option</li>
+                </ul>
+                <button class="v-button"
+                    style="width: 100%; margin-top: 40px; font-size: 0.6rem; background: var(--v-accent); color: #000;">SELECT_PROTOCOL</button>
+            </div>
+            <div style="grid-column: span 4; padding: 40px; border: 1px solid var(--v-border);">
+                <h4 style="font-family: 'Syne'; margin-bottom: 20px;">ELITE_L3</h4>
+                <ul style="list-style: none; padding: 0; font-size: 0.8rem; opacity: 0.7; line-height: 2;">
+                    <li>// < 15M Response Time</li>
+                    <li>// Full Root Access Management</li>
+                    <li>// Orbital Incident Team Availability</li>
+                </ul>
+                <button class="v-button"
+                    style="width: 100%; margin-top: 40px; font-size: 0.6rem;">SELECT_PROTOCOL</button>
             </div>
         </div>
     </section>

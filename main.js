@@ -111,10 +111,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (toggle && navLinks) {
         toggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            // Animate hamburger spans if desired
-            toggle.children[0].style.transform = navLinks.classList.contains('active') ? 'rotate(45deg) translate(5px, 5px)' : 'none';
-            toggle.children[1].style.opacity = navLinks.classList.contains('active') ? '0' : '1';
-            toggle.children[2].style.transform = navLinks.classList.contains('active') ? 'rotate(-45deg) translate(5px, -5px)' : 'none';
+            const isActive = navLinks.classList.contains('active');
+
+            // Refined X animation
+            toggle.children[0].style.transform = isActive ? 'rotate(45deg) translate(6px, 6px)' : 'none';
+            toggle.children[1].style.opacity = isActive ? '0' : '1';
+            toggle.children[2].style.transform = isActive ? 'rotate(-45deg) translate(6px, -6px)' : 'none';
         });
     }
 

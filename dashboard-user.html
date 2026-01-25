@@ -55,8 +55,8 @@
                 left: -100%;
                 top: 0;
                 bottom: 0;
-                width: 80%;
-                max-width: 300px;
+                width: 100%;
+                max-width: none;
                 z-index: 1002;
                 transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
                 background: var(--v-gray);
@@ -83,26 +83,125 @@
             .dash-mobile-toggle {
                 display: inline-flex !important;
                 position: fixed;
-                top: 110px;
-                left: 20px;
+                top: 130px;
+                /* Shifted down to avoid nav overlap */
+                left: -5px;
+                /* Appear from outside */
                 z-index: 100;
-                padding: 10px 15px;
-                font-size: 0.6rem;
+                padding: 12px 20px 12px 25px;
+                font-size: 0.65rem;
                 background: var(--v-accent) !important;
                 color: #000 !important;
                 border: none;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                border-radius: 2px;
+                box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+                border-radius: 0 4px 4px 0;
+                align-items: center;
+                gap: 8px;
+                transition: 0.3s;
+            }
+
+            .dash-mobile-toggle:hover {
+                left: 0;
+            }
+
+            .dash-mobile-toggle::after {
+                content: "→";
+                font-size: 0.8rem;
+                font-weight: bold;
+            }
+
+            * {
+                box-sizing: border-box !important;
+            }
+
+            body,
+            html {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                overflow-x: hidden !important;
+            }
+
+            .t-layout,
+            main,
+            .dash-content,
+            .v-container {
+                width: 100% !important;
+                max-width: 100vw !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                overflow-x: hidden !important;
+            }
+
+            nav {
+                width: 100% !important;
+                max-width: 100vw !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                /* overflow-x: hidden removed to prevent menu clipping */
             }
 
             .dash-content {
-                padding: 140px 20px 30px;
-                width: 100%;
+                padding: 30px 10px;
+                display: block;
+            }
+
+            /* Force all sections and boxes to be full width */
+            .dash-section,
+            .dash-section>div,
+            .dash-content>div {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            /* Adjust internal paddings for mobile boxes */
+            .dash-section>div[style*="padding: 40px"],
+            .dash-section>div[style*="padding: 5%"],
+            .dash-card {
+                padding: 25px 15px !important;
+                width: 100% !important;
+            }
+
+            .dash-section .v-grid {
+                gap: 15px !important;
+                width: 100% !important;
+                grid-template-columns: 1fr !important;
+            }
+
+            /* Fix specific grid patterns causing overflow */
+            div[style*="grid-template-columns: 1fr 1fr"],
+            div[style*="grid-template-columns: repeat(2, 1fr)"],
+            div[style*="grid-template-columns: 1fr 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+
+            /* Fix header alignment and width */
+            .dash-content>div[style*="display: flex"] {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 15px !important;
+                width: 100% !important;
+            }
+
+            .dash-content>div[style*="display: flex"]>div {
+                width: 100% !important;
+                text-align: left !important;
+                padding-right: 0 !important;
+                padding-left: 0 !important;
             }
 
             /* Remove max-width constraints on mobile */
             div[style*="max-width: 600px"] {
                 max-width: 100% !important;
+            }
+
+            /* Fix fixed-width interactive elements */
+            div[style*="width: 300px"][style*="height: 300px"] {
+                width: 280px !important;
+                height: 280px !important;
             }
 
             /* Backdrop Overlay */
@@ -123,6 +222,14 @@
             }
         }
     </style>
+    <style>
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -174,8 +281,8 @@
         <aside class="t-sidebar">
             <!-- Mobile Close Button -->
             <button class="v-button" onclick="toggleSidebar()"
-                style="position: absolute; top: 20px; right: 20px; padding: 5px 10px; font-size: 0.6rem; display: none;"
-                id="sidebar-close">CLOSE</button>
+                style="position: absolute; top: 30px; right: 30px; font-size: 0.6rem; display: none;"
+                id="sidebar-close"><span>CLOSE [X]</span></button>
             <div style="margin-bottom: 40px;">
                 <div
                     style="width: 60px; height: 60px; background: var(--v-white); border-radius: 50%; overflow: hidden; margin-bottom: 10px;">
@@ -191,8 +298,7 @@
                 <a href="#" class="t-link">PRODUCTION_FEED</a>
                 <a href="#" class="t-link">SCHEMATICS</a>
                 <a href="#" class="t-link">LOGISTICS</a>
-                <a href="#" class="t-link">MESSAGES [3]</a>
-                <a href="#" class="t-link">SETTINGS</a>
+
             </div>
             <div style="margin-top: 60px;">
                 <span class="v-label">SYSTEM_STATUS</span>
@@ -207,10 +313,10 @@
             <div class="dash-content">
                 <!-- HEADER -->
                 <div
-                    style="margin-bottom: 60px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px;">
+                    style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px;">
                     <div>
                         <button onclick="toggleSidebar()" class="v-button dash-mobile-toggle"
-                            style="display: none; margin-bottom: 20px; font-size: 0.7rem; padding: 10px 20px;">INTERFACE_MENU</button>
+                            style="display: none; margin-bottom: 10px;"></button>
                         <span class="v-label" id="page-label">USER_DASHBOARD // OVERVIEW</span>
                         <h1 id="page-title"
                             style="font-size: clamp(2rem, 5vw, 3rem); margin-top: 20px; line-height: 1.1;">MISSION
@@ -253,23 +359,8 @@
                                     style="font-size: 0.7rem; border: 1px solid var(--v-border); padding: 2px 8px;">24H</span>
                             </div>
                         </div>
-                        <div style="height: 100px; width: 100%; display: flex; align-items: flex-end; gap: 1%;">
-                            <!-- Graph Bars -->
-                            <div style="width: 5%; height: 40%; background: var(--v-accent); opacity: 0.5;"></div>
-                            <div style="width: 5%; height: 60%; background: var(--v-accent); opacity: 0.6;"></div>
-                            <div style="width: 5%; height: 50%; background: var(--v-accent); opacity: 0.5;"></div>
-                            <div style="width: 5%; height: 80%; background: var(--v-accent); opacity: 0.8;"></div>
-                            <div style="width: 5%; height: 75%; background: var(--v-accent); opacity: 0.7;"></div>
-                            <div style="width: 5%; height: 90%; background: var(--v-accent); opacity: 0.9;"></div>
-                            <div style="width: 5%; height: 70%; background: var(--v-accent); opacity: 0.7;"></div>
-                            <div style="width: 5%; height: 60%; background: var(--v-accent); opacity: 0.6;"></div>
-                            <div style="width: 5%; height: 40%; background: var(--v-accent); opacity: 0.4;"></div>
-                            <div style="width: 5%; height: 55%; background: var(--v-accent); opacity: 0.5;"></div>
-                            <div style="width: 5%; height: 85%; background: var(--v-accent); opacity: 0.8;"></div>
-                            <div style="width: 5%; height: 100%; background: var(--v-accent);"></div>
-                            <div
-                                style="width: 35%; display:flex; align-items:center; justify-content:center; opacity:0.5; font-size:0.6rem;">
-                                [ LIVE_FEED ]</div>
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="prodChart"></canvas>
                         </div>
                     </div>
 
@@ -310,6 +401,13 @@
                                     <td style="text-align: right; opacity: 0.6;">Oct 26, 2026</td>
                                 </tr>
                             </table>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 60px; border-top: 1px solid var(--v-border); padding-top: 40px;">
+                        <span class="v-label">REGIONAL_PERFORMANCE</span>
+                        <div class="chart-container" style="height: 300px; margin-top: 30px;">
+                            <canvas id="regChart"></canvas>
                         </div>
                     </div>
 
@@ -363,6 +461,12 @@
                                     UNIT_492: QA_CHECK_PASSED</div>
                                 <div style="padding: 10px 0; border-bottom: 1px solid var(--v-border);">[14:15]
                                     UNIT_490: PACKAGED_FOR_LOGISTICS</div>
+                            </div>
+                        </div>
+                        <div class="dash-card">
+                            <span class="v-label">FEED_VELOCITY</span>
+                            <div class="chart-container" style="height: 300px; margin-top: 20px;">
+                                <canvas id="lineVelocityChart"></canvas>
                             </div>
                         </div>
                         <div class="dash-card" style="background: transparent; border: none; padding: 0;">
@@ -449,61 +553,155 @@
                                 <p style="font-size: 0.6rem; opacity: 0.5; margin-top: 5px;">SIGNED: K. AKIRA</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- SECTION: MESSAGES -->
-                <div id="section-messages" class="dash-section" style="display: none;">
-                    <span class="v-label">INBOX_ENCRYPTED [3]</span>
-                    <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr; gap: 10px;">
-                        <div class="dash-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <h4 style="font-size: 0.9rem;">ADMIN_CORE</h4>
-                                <span style="font-size: 0.6rem; opacity: 0.5;">10:42 AM</span>
+                        <div style="margin-top: 60px;">
+                            <span class="v-label">DELIVERY_DISTRIBUTION</span>
+                            <div class="dash-card"
+                                style="margin-top: 20px; max-width: 400px; margin-left: auto; margin-right: auto;">
+                                <div class="chart-container" style="height: 300px;">
+                                    <canvas id="distChart"></canvas>
+                                </div>
                             </div>
-                            <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.7;">Weekly security protocols have
-                                been updated. Please review the attached manifest.</p>
-                        </div>
-                        <div class="dash-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <h4 style="font-size: 0.9rem;">LOGISTICS_LEAD</h4>
-                                <span style="font-size: 0.6rem; opacity: 0.5;">YESTERDAY</span>
-                            </div>
-                            <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.7;">Delay in component #44-B due
-                                to orbital debris. Adjusting timeline.</p>
                         </div>
                     </div>
-                </div>
 
-                <!-- SECTION: SETTINGS -->
-                <div id="section-settings" class="dash-section" style="display: none;">
-                    <span class="v-label">USER_PREFERENCES</span>
-                    <div style="margin-top: 30px; max-width: 600px;">
-                        <div style="margin-bottom: 30px;">
-                            <h4 style="margin-bottom: 10px;">NOTIFICATIONS</h4>
-                            <label
-                                style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
-                                <input type="checkbox" checked style="accent-color: var(--v-accent);">
-                                <span style="font-size: 0.8rem;">Allow Push Alerts</span>
-                            </label>
-                            <label
-                                style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
-                                <input type="checkbox" checked style="accent-color: var(--v-accent);">
-                                <span style="font-size: 0.8rem;">Email Digests</span>
-                            </label>
+                    <!-- SECTION: INTELLIGENCE -->
+                    <div id="section-intelligence" class="dash-section" style="display: none;">
+                        <span class="v-label">R&D_INSIGHTS</span>
+                        <div class="v-grid"
+                            style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px;">
+                            <div class="dash-card">
+                                <h4 style="font-size: 1rem;">NEURAL_ALLOY_v2</h4>
+                                <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.6;">Achieved 12% increase in
+                                    stress compensation. Ready for field-test phase.</p>
+                                <div style="margin-top: 20px; height: 4px; background: var(--v-black);">
+                                    <div style="width: 75%; height: 100%; background: var(--v-accent);"></div>
+                                </div>
+                            </div>
+                            <div class="dash-card">
+                                <h4 style="font-size: 1rem;">ORBITAL_WELDING</h4>
+                                <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.6;">Projected completion of
+                                    prototype unit delayed by 48 hours for QA.</p>
+                                <div style="margin-top: 20px; height: 4px; background: var(--v-black);">
+                                    <div style="width: 40%; height: 100%; background: #FFA500;"></div>
+                                </div>
+                            </div>
+                            <div class="dash-card">
+                                <h3 class="v-label">UNIT_CAPABILITY</h3>
+                                <div class="chart-container" style="height: 300px; margin-top: 20px;">
+                                    <canvas id="radarSkillChart"></canvas>
+                                </div>
+                            </div>
                         </div>
-                        <div style="margin-bottom: 30px;">
-                            <h4 style="margin-bottom: 10px;">SECURITY</h4>
-                            <label
-                                style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
-                                <input type="checkbox" checked style="accent-color: var(--v-accent);">
-                                <span style="font-size: 0.8rem;">2-Factor Authentication</span>
-                            </label>
+                    </div>
+
+                    <!-- SECTION: FINANCIALS -->
+                    <div id="section-financials" class="dash-section" style="display: none;">
+                        <span class="v-label">ACCOUNT_BALANCE</span>
+                        <div
+                            style="margin-top: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                            <div class="dash-card">
+                                <span class="v-label" style="font-size: 0.5rem;">ESCROW_TOTAL</span>
+                                <div class="dash-stat">$1.2M</div>
+                            </div>
+                            <div class="dash-card">
+                                <span class="v-label" style="font-size: 0.5rem;">CREDIT_LINE</span>
+                                <div class="dash-stat">$5.0M</div>
+                            </div>
+                            <div class="dash-card">
+                                <div class="chart-container" style="height: 150px;">
+                                    <canvas id="financeChart"></canvas>
+                                </div>
+                                <p style="text-align:center; font-size:0.6rem; margin-top:10px; opacity:0.6;">ALLOCATION
+                                </p>
+                            </div>
                         </div>
-                        <button class="v-button" style="width: 100%;"><span>SAVE_CHANGES</span></button>
+                        <div style="margin-top: 40px; overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                                <tr style="border-bottom: 1px solid var(--v-border); font-size: 0.7rem; opacity: 0.5;">
+                                    <th style="padding: 15px 0;">DATE</th>
+                                    <th>DESCRIPTION</th>
+                                    <th style="text-align: right;">AMOUNT</th>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--v-border); font-size: 0.8rem;">
+                                    <td style="padding: 20px 0;">OCT 24</td>
+                                    <td>PAYMENT_RECEIVED // TITAN_H</td>
+                                    <td style="text-align: right; color: #00FF00;">+$450,000</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--v-border); font-size: 0.8rem;">
+                                    <td style="padding: 20px 0;">OCT 22</td>
+                                    <td>NODE_MAINTENANCE_FEE</td>
+                                    <td style="text-align: right; color: #FF3D00;">-$12,400</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="margin-top: 60px;">
+                            <span class="v-label">MONTHLY_SPENDING_TRENDS</span>
+                            <div class="chart-container" style="height: 300px; margin-top: 30px;">
+                                <canvas id="monthlySpendChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION: MESSAGES -->
+                    <div id="section-messages" class="dash-section" style="display: none;">
+                        <span class="v-label">INBOX_ENCRYPTED [3]</span>
+                        <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr; gap: 10px;">
+                            <div class="dash-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <h4 style="font-size: 0.9rem;">ADMIN_CORE</h4>
+                                    <span style="font-size: 0.6rem; opacity: 0.5;">10:42 AM</span>
+                                </div>
+                                <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.7;">Weekly security protocols
+                                    have
+                                    been updated. Please review the attached manifest.</p>
+                            </div>
+                            <div class="dash-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <h4 style="font-size: 0.9rem;">LOGISTICS_LEAD</h4>
+                                    <span style="font-size: 0.6rem; opacity: 0.5;">YESTERDAY</span>
+                                </div>
+                                <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.7;">Delay in component #44-B
+                                    due
+                                    to orbital debris. Adjusting timeline.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION: SETTINGS -->
+                    <div id="section-settings" class="dash-section" style="display: none;">
+                        <span class="v-label">USER_PREFERENCES</span>
+                        <div style="margin-top: 30px; max-width: 600px;">
+                            <div style="margin-bottom: 30px;">
+                                <h4 style="margin-bottom: 10px;">NOTIFICATIONS</h4>
+                                <label
+                                    style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
+                                    <input type="checkbox" checked style="accent-color: var(--v-accent);">
+                                    <span style="font-size: 0.8rem;">Allow Push Alerts</span>
+                                </label>
+                                <label
+                                    style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
+                                    <input type="checkbox" checked style="accent-color: var(--v-accent);">
+                                    <span style="font-size: 0.8rem;">Email Digests</span>
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 30px;">
+                                <h4 style="margin-bottom: 10px;">SECURITY</h4>
+                                <label
+                                    style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
+                                    <input type="checkbox" checked style="accent-color: var(--v-accent);">
+                                    <span style="font-size: 0.8rem;">2-Factor Authentication</span>
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 30px;">
+                                <h4 style="margin-bottom: 10px;">STORAGE_LOAD</h4>
+                                <div class="chart-container" style="height: 200px;">
+                                    <canvas id="usageChart"></canvas>
+                                </div>
+                            </div>
+                            <button class="v-button" style="width: 100%;"><span>SAVE_CHANGES</span></button>
+                        </div>
                     </div>
                 </div>
-            </div>
         </main>
     </div>
 
@@ -607,6 +805,8 @@
             'PRODUCTION_FEED': { id: 'section-production', title: 'LIVE <br>FEED.' },
             'SCHEMATICS': { id: 'section-schematics', title: 'TECH <br>SPECS.' },
             'LOGISTICS': { id: 'section-logistics', title: 'GLOBAL <br>FLOW.' },
+            'INTELLIGENCE': { id: 'section-intelligence', title: 'STRATEGIC <br>INTEL.' },
+            'FINANCIALS': { id: 'section-financials', title: 'ACCOUNT <br>AUDIT.' },
             'MESSAGES [3]': { id: 'section-messages', title: 'SECURE <br>COMMS.' },
             'SETTINGS': { id: 'section-settings', title: 'SYSTEM <br>CONFIG.' }
         };
@@ -629,7 +829,311 @@
                     // Update Header
                     pageLabel.innerText = `USER_DASHBOARD // ${key}`;
                     pageTitle.innerHTML = data.title;
+
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                    // Close sidebar on mobile
+                    if (window.innerWidth <= 1024) {
+                        toggleSidebar();
+                    }
                 }
+            });
+        });
+
+        // Initialize Charts
+        document.addEventListener('DOMContentLoaded', () => {
+            // Helper to get correct colors based on theme
+            const getThemeColors = () => {
+                const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+                const style = getComputedStyle(document.documentElement);
+                return {
+                    text: isLight ? '#000000' : '#FFFFFF',
+                    grid: isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255, 255, 255, 0.1)',
+                    ticks: isLight ? '#000000' : '#888888',
+                    accent: style.getPropertyValue('--v-accent').trim()
+                };
+            };
+
+            let currentColors = getThemeColors();
+            let prodChart = null;
+            let financeChart = null;
+            let regChart = null;
+            let lineVelocityChart = null;
+            let distChart = null;
+            let radarSkillChart = null;
+            let monthlySpendChart = null;
+            let usageChart = null;
+
+            // 1. Production Bar Chart
+            const ctxProd = document.getElementById('prodChart');
+            if (ctxProd) {
+                prodChart = new Chart(ctxProd, {
+                    type: 'bar',
+                    data: {
+                        labels: ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'],
+                        datasets: [{
+                            label: 'UNIT_OUTPUT / HR',
+                            data: [45, 59, 80, 81, 56, 55, 40, 60],
+                            backgroundColor: currentColors.accent,
+                            borderRadius: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(0,0,0,0.8)',
+                                titleColor: currentColors.accent,
+                                bodyFont: { family: 'JetBrains Mono' }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: currentColors.ticks, font: { family: 'JetBrains Mono', size: 9 } }
+                            },
+                            y: {
+                                grid: { color: currentColors.grid },
+                                ticks: { color: currentColors.ticks, font: { family: 'JetBrains Mono', size: 9 } },
+                                border: { display: false }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 2. Financial Doughnut Chart
+            const ctxFin = document.getElementById('financeChart');
+            if (ctxFin) {
+                financeChart = new Chart(ctxFin, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['R&D', 'LOGISTICS', 'OPS', 'ESCROW'],
+                        datasets: [{
+                            data: [40, 25, 20, 15],
+                            backgroundColor: [
+                                currentColors.accent,
+                                '#00FF00',
+                                '#FFA500',
+                                'rgba(255, 255, 255, 0.1)'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        cutout: '60%'
+                    }
+                });
+            }
+
+            // 3. Regional Performance (Bar)
+            const ctxReg = document.getElementById('regChart');
+            if (ctxReg) {
+                regChart = new Chart(ctxReg, {
+                    type: 'bar',
+                    data: {
+                        labels: ['NORTH_AM', 'EUROPE', 'ASIA_PAC', 'LATAM', 'AFRICA'],
+                        datasets: [{
+                            data: [450, 320, 610, 240, 180],
+                            backgroundColor: currentColors.accent,
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { grid: { color: currentColors.grid }, ticks: { color: currentColors.ticks } },
+                            y: { grid: { display: false }, ticks: { color: currentColors.ticks } }
+                        }
+                    }
+                });
+            }
+
+            // 4. Feed Velocity (Line)
+            const ctxVel = document.getElementById('lineVelocityChart');
+            if (ctxVel) {
+                lineVelocityChart = new Chart(ctxVel, {
+                    type: 'line',
+                    data: {
+                        labels: ['1min', '2min', '3min', '4min', '5min', '6min'],
+                        datasets: [{
+                            label: 'PPS',
+                            data: [120, 135, 125, 145, 160, 155],
+                            borderColor: currentColors.accent,
+                            borderWidth: 2,
+                            tension: 0.4,
+                            pointRadius: 0,
+                            fill: true,
+                            backgroundColor: currentColors.accent + '22'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { display: false },
+                            y: { grid: { color: currentColors.grid }, ticks: { color: currentColors.ticks } }
+                        }
+                    }
+                });
+            }
+
+            // 5. Delivery Distribution (Pie)
+            const ctxDist = document.getElementById('distChart');
+            if (ctxDist) {
+                distChart = new Chart(ctxDist, {
+                    type: 'pie',
+                    data: {
+                        labels: ['AIR', 'SEA', 'ORBITAL', 'GROUND'],
+                        datasets: [{
+                            data: [35, 20, 15, 30],
+                            backgroundColor: [currentColors.accent, '#00FF00', '#FFA500', '#555'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom', labels: { color: currentColors.text, font: { family: 'JetBrains Mono', size: 10 } } } }
+                    }
+                });
+            }
+
+            // 6. Unit Capability (Radar)
+            const ctxRadar = document.getElementById('radarSkillChart');
+            if (ctxRadar) {
+                radarSkillChart = new Chart(ctxRadar, {
+                    type: 'radar',
+                    data: {
+                        labels: ['SPEED', 'DURABILITY', 'INTELLIGENCE', 'STEALTH', 'POWER'],
+                        datasets: [{
+                            label: 'MODEL_X',
+                            data: [85, 70, 90, 60, 80],
+                            borderColor: currentColors.accent,
+                            backgroundColor: currentColors.accent + '33',
+                            pointBackgroundColor: currentColors.accent
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                grid: { color: currentColors.grid },
+                                angleLines: { color: currentColors.grid },
+                                pointLabels: { color: currentColors.text },
+                                ticks: { display: false }
+                            }
+                        },
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
+
+            // 7. Monthly Spend (Bar)
+            const ctxSpend = document.getElementById('monthlySpendChart');
+            if (ctxSpend) {
+                monthlySpendChart = new Chart(ctxSpend, {
+                    type: 'bar',
+                    data: {
+                        labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN'],
+                        datasets: [{
+                            label: 'SPEND',
+                            data: [12000, 15000, 13000, 17000, 19000, 16000],
+                            backgroundColor: currentColors.accent
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { grid: { display: false }, ticks: { color: currentColors.ticks } },
+                            y: { grid: { color: currentColors.grid }, ticks: { color: currentColors.ticks } }
+                        }
+                    }
+                });
+            }
+
+            // 8. Usage (Doughnut)
+            const ctxUsage = document.getElementById('usageChart');
+            if (ctxUsage) {
+                usageChart = new Chart(ctxUsage, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['USED', 'FREE'],
+                        datasets: [{
+                            data: [75, 25],
+                            backgroundColor: [currentColors.accent, 'rgba(255,255,255,0.05)'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '80%',
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
+
+            // Theme Observer
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+                        const newColors = getThemeColors();
+
+                        const allCharts = [prodChart, financeChart, regChart, lineVelocityChart, distChart, radarSkillChart, monthlySpendChart, usageChart];
+                        allCharts.forEach(chart => {
+                            if (!chart) return;
+
+                            // Update scales if they exist
+                            if (chart.options.scales) {
+                                Object.values(chart.options.scales).forEach(scale => {
+                                    if (scale.ticks) scale.ticks.color = newColors.ticks;
+                                    if (scale.grid) scale.grid.color = newColors.grid;
+                                    if (scale.pointLabels) scale.pointLabels.color = newColors.text;
+                                    if (scale.angleLines) scale.angleLines.color = newColors.grid;
+                                });
+                            }
+
+                            // Update plugin labels
+                            if (chart.options.plugins && chart.options.plugins.legend && chart.options.plugins.legend.labels) {
+                                chart.options.plugins.legend.labels.color = newColors.text;
+                            }
+
+                            // Update dataset colors
+                            chart.data.datasets.forEach(dataset => {
+                                if (Array.isArray(dataset.backgroundColor)) {
+                                    dataset.backgroundColor[0] = newColors.accent;
+                                } else {
+                                    dataset.backgroundColor = newColors.accent;
+                                }
+                                if (dataset.borderColor) dataset.borderColor = newColors.accent;
+                                if (dataset.pointBackgroundColor) dataset.pointBackgroundColor = newColors.accent;
+                            });
+
+                            chart.update();
+                        });
+                    }
+                });
+            });
+
+            observer.observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: ['data-theme']
             });
         });
     </script>

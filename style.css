@@ -23,6 +23,7 @@
     --v-accent-dim: rgba(255, 61, 0, 0.15);
     --v-gray: #E0E0E0;
     --v-gray-light: #CCCCCC;
+    --v-border: rgba(0, 0, 0, 0.1);
 }
 
 /* --- Foundation --- */
@@ -429,6 +430,66 @@ section {
     font-family: sans-serif;
 }
 
+[dir="rtl"] .hero-visual {
+    right: auto;
+    left: var(--v-margin);
+}
+
+[dir="rtl"] .section-num {
+    left: auto;
+    right: var(--v-margin);
+}
+
+[dir="rtl"] .hero h1 {
+    margin-left: 0;
+    margin-right: -0.05em;
+}
+
+[dir="rtl"] .dropdown-content {
+    left: auto;
+    right: -10px;
+}
+
+[dir="rtl"] .v-logo::before {
+    order: 2;
+}
+
+[dir="rtl"] .v-card::after {
+    right: auto;
+    left: 20px;
+}
+
+[dir="rtl"] .nav-links {
+    left: auto;
+    right: 0;
+}
+
+[dir="rtl"] .t-layout {
+    grid-template-columns: 1fr 320px;
+}
+
+[dir="rtl"] .t-sidebar {
+    border-right: none;
+    border-left: 1px solid var(--v-border);
+}
+
+[dir="rtl"] [style*="border-left"] {
+    border-left-width: 0 !important;
+    border-right-width: 1px !important;
+    border-right-style: solid !important;
+}
+
+[dir="rtl"] [style*="padding-left"] {
+    padding-left: 0 !important;
+    padding-right: 40px !important;
+    /* Approximation for common value */
+}
+
+/* Fix for alternating rows in services.html */
+[dir="rtl"] .vector-row[style*="row-reverse"] {
+    flex-direction: row !important;
+}
+
 /* --- Responsive & Mobile --- */
 @media (max-width: 1024px) {
     :root {
@@ -471,16 +532,19 @@ section {
         display: none;
         /* Hide default nav items */
         position: fixed;
-        top: 80px;
+        top: 0;
+        /* Changed from 80px to 0 for full screen coverage */
         left: 0;
         width: 100%;
-        height: calc(100vh - 80px);
+        height: 100vh;
         background: var(--v-black);
         flex-direction: column;
-        padding: 40px;
+        padding: 120px 40px 40px;
+        /* Added top padding to clear nav bar */
         border-bottom: 1px solid var(--v-border);
-        gap: 20px;
-        z-index: 999;
+        gap: 30px;
+        z-index: 2000;
+        /* Increased to be above nav (1000) */
         overflow-y: auto;
     }
 
@@ -502,7 +566,8 @@ section {
         width: 30px;
         height: 20px;
         cursor: pointer;
-        z-index: 1001;
+        z-index: 3000;
+        /* Higher than nav-links (2000) */
     }
 
     .mobile-toggle span {
@@ -518,6 +583,12 @@ section {
         display: flex;
         flex-direction: column;
         gap: 40px;
+    }
+
+    /* Handle grid-column spans in flex layout */
+    .v-grid>* {
+        grid-column: span 12 !important;
+        width: 100% !important;
     }
 
     /* Typography Scaling */
@@ -539,6 +610,11 @@ section {
         /* Align with mobile margin */
     }
 
+    [dir="rtl"] .section-num {
+        left: auto;
+        right: 20px;
+    }
+
     /* Marquee Handling */
     .v-marquee {
         width: 100vw;
@@ -551,8 +627,11 @@ section {
     }
 
     /* Auto-fix generic overlaps */
-    div[style*="height: 500px"] {
-        height: 300px !important;
+    div[style*="height: 500px"],
+    div[style*="height: 600px"],
+    div[style*="height: 400px"] {
+        height: auto !important;
+        min-height: 300px;
     }
 
     .v-card {
@@ -571,7 +650,7 @@ section {
     .vector-side {
         border-right: none;
         border-bottom: 1px solid var(--v-border);
-        padding: 40px 20px;
+        padding: 40px 20px !important;
         width: 100%;
     }
 
@@ -585,6 +664,23 @@ section {
         width: 100%;
         overflow: hidden;
         /* Safety clip */
+    }
+
+    header.hero {
+        padding-top: 150px;
+        min-height: auto;
+        padding-bottom: 80px;
+    }
+
+    section {
+        padding: 5rem 0;
+    }
+
+    .evolution-item {
+        text-align: center !important;
+        border-right: none !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
     }
 }
 
